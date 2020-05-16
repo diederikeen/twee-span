@@ -1,0 +1,235 @@
+fragment Image on Image {
+  id
+  originalSrc
+  altText
+}
+
+fragment PriceModel on MoneyV2 {
+  amount
+  currencyCode
+}
+
+fragment PriceRange on ProductPriceRange {
+  maxVariantPrice {
+    ...PriceModel
+  }
+  minVariantPrice {
+    ...PriceModel
+  }
+}
+
+fragment Variants on ProductVariantConnection {
+  edges {
+    node {
+      id
+      title
+      priceV2 {
+        ...PriceModel
+      }
+      currentlyNotInStock
+      availableForSale
+      unitPrice {
+        ...PriceModel
+      }
+      quantityAvailable
+    }
+  }
+}
+
+fragment Products on ProductConnection {
+  edges {
+    node {
+      id
+      title
+      productType
+      handle
+      priceRange {
+        ...PriceRange
+      }
+      variants(first: 250) {
+        ...Variants
+      }
+      images(first: 4) {
+        edges {
+          node {
+            ...Image
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment Collections on CollectionConnection {
+  edges {
+    node {
+      title
+      id
+      handle
+      image {
+        ...Image
+      }
+      products(first: 4) {
+        ...Products
+      }
+    }
+  }
+}
+
+query GET_COLLECTIONS($amount: Int = 4) {
+  collections(first: $amount) {
+    ...Collections
+  }
+}
+
+query GET_SINGLE_COLLECTION($handle: String!) {
+  collectionByHandle(handle: $handle) {
+    id
+    title
+    products(first: 250) {
+      ...Products
+    }
+  }
+}
+
+query GET_SINGLE_PRODUCT($handle: String!) {
+  productByHandle(handle: $handle) {
+    id
+    title
+    description
+    availableForSale
+    options {
+      id
+      name
+      values
+    }
+    images(first: 4) {
+      edges {
+        node {
+          id
+          originalSrc
+        }
+      }
+    }
+    variants(first: 250) {
+      edges {
+        node {
+          id
+          title
+          priceV2 {
+            amount
+          }
+          quantityAvailable
+          product {
+            id
+            priceRange {
+              ...PriceRange
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+# Create checkout method
+# const [
+#     createCheckout,
+#     { data: createCheckoutData, loading: createLoading },
+#   ] = useMutation(CREATE_CHECKOUT);
+
+# Add item to checkout method
+# const [addItem, { data: addItemData, loading: addLoading }] = useMutation(
+#   UPDATE_CHECKOUT
+# );
+
+mutation CREATE_CHECKOUT($input: CheckoutCreateInput!) {
+  checkoutCreate(input: $input) {
+    checkout {
+      id
+      webUrl
+      subtotalPriceV2 {
+        ...PriceModel
+      }
+      totalPriceV2 {
+        amount
+      }
+      totalTaxV2 {
+        amount
+      }
+      lineItems(first: 5) {
+        edges {
+          node {
+            id
+            title
+            quantity
+            variant {
+              selectedOptions {
+                name
+                value
+              }
+              priceV2 {
+                amount
+              }
+              image {
+                originalSrc
+              }
+              product {
+                handle
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation UPDATE_CHECKOUT(
+  $lineItems: [CheckoutLineItemInput!]!
+  $checkoutId: ID!
+) {
+  checkoutLineItemsAdd(lineItems: $lineItems, checkoutId: $checkoutId) {
+    checkout {
+      id
+      webUrl
+      subtotalPriceV2 {
+        ...PriceModel
+      }
+      totalPriceV2 {
+        ...PriceModel
+      }
+      totalTaxV2 {
+        ...PriceModel
+      }
+
+      lineItems(first: 250) {
+        edges {
+          node {
+            id
+            title
+            quantity
+            unitPrice {
+              amount
+            }
+            variant {
+              selectedOptions {
+                name
+                value
+              }
+              priceV2 {
+                amount
+              }
+              image {
+                originalSrc
+              }
+              product {
+                handle
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
