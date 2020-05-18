@@ -22,13 +22,11 @@ import { CartContextProvider } from "./context/cart/Cart";
 import Logo from "./images/icons/2-SPAN.svg";
 
 const client = new ApolloClient({
-  uri: "/api",
+  uri: "https://2span.myshopify.com/api/2020-04/graphql.json",
   cache: new InMemoryCache(),
 
   headers: {
     Accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
-
     "X-Shopify-Storefront-Access-Token": "d80ec663480008130c47c79bd5657cb4",
   },
 
