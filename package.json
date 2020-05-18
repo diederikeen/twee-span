@@ -1,8 +1,7 @@
 {
-  "name": "portfolio",
+  "name": "2-span",
   "version": "0.1.0",
-  "private": true,
-  "proxy": "http://2span.myshopify.com/",
+  "private": false,
   "dependencies": {
     "@babel/core": "7.9.0",
     "@svgr/webpack": "4.3.3",
@@ -92,6 +91,7 @@
     "@mojs/core": "^0.288.2",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
+    "apollo-client-preset": "^1.0.8",
     "axios": "^0.19.2",
     "graphql-tag": "^2.10.3",
     "graphql.macro": "^1.4.2",
