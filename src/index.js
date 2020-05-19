@@ -3,7 +3,8 @@ import { get } from "lodash";
 import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
-import { routes, RenderRoutes } from "./helpers";
+import { routes } from "./helpers";
+import RenderRoutes from "./helpers/RenderRoutes";
 import { BrowserRouter as Router, NavLink, Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 
