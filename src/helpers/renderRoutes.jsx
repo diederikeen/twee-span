@@ -2,14 +2,14 @@ import React from "react";
 import { Switch } from "react-router";
 import { Route } from "react-router-dom";
 
-const RenderRoutes = ({ routes }) => (
+const renderRoutes = (routes) => (
   <Switch>
     {routes.map((route, index) =>
       route.childRoutes ? (
         React.createElement(
           route.component,
           { key: index },
-          <RenderRoutes routes={route.childRoutes} />
+          renderRoutes(route.childRoutes)
         )
       ) : (
         <Route key={index} {...route} />
@@ -18,4 +18,4 @@ const RenderRoutes = ({ routes }) => (
   </Switch>
 );
 
-export default RenderRoutes;
+export default renderRoutes;

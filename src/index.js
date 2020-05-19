@@ -3,7 +3,7 @@ import { get } from "lodash";
 import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
-import { routes, RenderRoutes } from "./helpers";
+import { routes, renderRoutes } from "./helpers";
 import { BrowserRouter as Router, NavLink, Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 
@@ -75,9 +75,7 @@ ReactDOM.render(
           <GlobalStyles />
           <CartBar />
           <Header />
-          <Wrap>
-            <RenderRoutes routes={routes} />
-          </Wrap>
+          <Wrap>{renderRoutes(routes)}</Wrap>
         </ApolloProvider>
       </CartContextProvider>
     </Router>
