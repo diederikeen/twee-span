@@ -1,3 +1,4 @@
 import routes from "./routes";
+import RenderRoutes from "./RenderRoutes.jsx";
 
-export { routes };
+export { RenderRoutes, routes };
