@@ -18,15 +18,6 @@ function ProductSingleContainer(props) {
     },
   });
 
-  // // const pageDescription = get(props, "location.state.description", "");
-  // const meta = props.location.state
-  //   ? {
-  //       pageDescription: get(props, "location.state.description", ""),
-  //     }
-  //   : {
-  //       pageDescription: data ? data.productByHandle.description : "",
-  //     };
-
   const product = get(data, "productByHandle", {
     title: "",
     description: "",
