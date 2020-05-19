@@ -3,8 +3,8 @@ import { get } from "lodash";
 import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
-import { routes, renderRoutes } from "./helpers";
-import { BrowserRouter as Router, NavLink } from "react-router-dom";
+import { routes, RenderRoutes } from "./helpers";
+import { BrowserRouter as Router, NavLink, Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 
 import CartBar from "./components/App/components/CartBar/CartBar";
@@ -21,10 +21,8 @@ import { CartContextProvider } from "./context/cart/Cart";
 
 import Logo from "./images/icons/2-SPAN.svg";
 
-console.log(process.env);
-
 const client = new ApolloClient({
-  uri: "https://2span.myshopify.com/api/2020-04/graphql.json",
+  uri: process.env.REACT_APP_SHOPIFY_URL,
   cache: new InMemoryCache(),
 
   headers: {
@@ -43,9 +41,11 @@ function Header() {
   return (
     <Nav>
       <Container className="flex flex-end items-center">
-        <div className="logo">
-          <ReactSVG src={Logo} wrapper="div" />
-        </div>
+        <Link to="/" style={{ marginRight: "auto" }}>
+          <div className="logo">
+            <ReactSVG src={Logo} wrapper="div" />
+          </div>
+        </Link>
 
         <NavLink to="/" exact>
           Homepagina
@@ -54,7 +54,10 @@ function Header() {
           collections.edges.map(({ node: collection }) => (
             <NavLink
               key={collection.handle}
-              to={`/categorie/${collection.handle}`}
+              to={{
+                pathname: `/categorie/${collection.handle}`,
+                state: { title: collection.title },
+              }}
             >
               {collection.title}
             </NavLink>
@@ -72,7 +75,9 @@ ReactDOM.render(
           <GlobalStyles />
           <CartBar />
           <Header />
-          <Wrap>{renderRoutes(routes)}</Wrap>
+          <Wrap>
+            <RenderRoutes routes={routes} />
+          </Wrap>
         </ApolloProvider>
       </CartContextProvider>
     </Router>

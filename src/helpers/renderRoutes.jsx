@@ -2,32 +2,20 @@ import React from "react";
 import { Switch } from "react-router";
 import { Route } from "react-router-dom";
 
-const renderRoutes = (routes) => (
+const RenderRoutes = ({ routes }) => (
   <Switch>
-    {routes.map((route) =>
-      route.childRoutes
-        ? route.childRoutes.map((childRoute) => {
-            return (
-              React.createElement(childRoute.component),
-              (
-                <Route
-                  path={childRoute.path}
-                  component={childRoute.component}
-                  exact={childRoute.exact}
-                />
-              )
-            );
-          })
-        : (React.createElement(route.component),
-          (
-            <Route
-              path={route.path}
-              component={route.component}
-              exact={route.exact}
-            />
-          ))
+    {routes.map((route, index) =>
+      route.childRoutes ? (
+        React.createElement(
+          route.component,
+          { key: index },
+          <RenderRoutes routes={route.childRoutes} />
+        )
+      ) : (
+        <Route key={index} {...route} />
+      )
     )}
   </Switch>
 );
 
-export default renderRoutes;
+export default RenderRoutes;

@@ -65,6 +65,7 @@ fragment Collections on CollectionConnection {
     node {
       title
       id
+      description
       handle
       image {
         ...Image
@@ -86,6 +87,7 @@ query GET_SINGLE_COLLECTION($handle: String!) {
   collectionByHandle(handle: $handle) {
     id
     title
+    description
     products(first: 250) {
       ...Products
     }

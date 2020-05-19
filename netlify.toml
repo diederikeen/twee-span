@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api"
-  to = "https://2span.myshopify.com/api/2020-04/graphql.json"
+  to = "$REACT_APP_SHOPIFY_URL"
   status = 200
   force = true
   headers = {X-From = "Netlify" , Access-Control-Allow-Origin = "*", X-Shopify-Storefront-Access-Token = "$process.env.REACT_APP_SHOPIFY",}

@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/react-hooks";
+import { get } from "lodash";
 import React from "react";
 
 import { ToasterContextProvider } from "context/toaster/Toaster";
@@ -17,10 +18,38 @@ function ProductSingleContainer(props) {
     },
   });
 
+  // // const pageDescription = get(props, "location.state.description", "");
+  // const meta = props.location.state
+  //   ? {
+  //       pageDescription: get(props, "location.state.description", ""),
+  //     }
+  //   : {
+  //       pageDescription: data ? data.productByHandle.description : "",
+  //     };
+
+  const product = get(data, "productByHandle", {
+    title: "",
+    description: "",
+  });
+
+  const hasLocationState = props.location.state;
+
+  const meta = {
+    pageTitle: hasLocationState ? hasLocationState.title : product.title,
+    pageDescription: hasLocationState.description
+      ? hasLocationState.description
+      : product.description,
+  };
+
   return (
     <ToasterContextProvider>
       <Container>
-        {!loading && <ProductSingleView product={data.productByHandle} />}
+        {!loading && (
+          <ProductSingleView
+            product={data.productByHandle}
+            metaDescription={meta.pageDescription}
+          />
+        )}
       </Container>
     </ToasterContextProvider>
   );

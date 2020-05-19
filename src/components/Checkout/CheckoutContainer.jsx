@@ -14,8 +14,6 @@ function CheckoutContainer(props) {
     cart: { lineItems, totalPrice, subTotal },
   } = useCart();
 
-  console.log(lineItems);
-
   return (
     <Container>
       <h1>Winkelwagentje.</h1>
@@ -26,7 +24,7 @@ function CheckoutContainer(props) {
             {lineItems.map(({ node: item }) => {
               const image = item.variant.image;
               const src = image ? image.originalSrc : Logo;
-              console.log(item);
+
               return (
                 <Link
                   key={item.id}

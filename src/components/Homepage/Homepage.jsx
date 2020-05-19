@@ -3,6 +3,7 @@ import { get } from "lodash";
 import React from "react";
 
 import Overview from "components/shared/Overview/Overview";
+import HtmlHead from "components/shared/htmlHead/HtmlHead";
 
 import { PageTitle } from "./Homepage.styles";
 import { Container } from "styles";
@@ -13,11 +14,16 @@ function Homepage() {
   const { data, loading } = useQuery(GET_COLLECTIONS);
   const collections = get(data, "collections");
 
+  // console.log(collections.edges);
+
   return (
-    <Container>
-      <PageTitle>Bekijk hier onze categorieën</PageTitle>
-      {!loading && <Overview items={collections.edges} />}
-    </Container>
+    <>
+      <HtmlHead description="Alles voor uw aanspanning" />;
+      <Container>
+        <PageTitle>Bekijk hier onze categorieën</PageTitle>
+        {!loading && <Overview items={collections.edges} />}
+      </Container>
+    </>
   );
 }
 

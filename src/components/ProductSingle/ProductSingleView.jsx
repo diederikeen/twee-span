@@ -5,6 +5,7 @@ import React, { useState } from "react";
 
 import { useCart } from "context/cart/Cart";
 import { useToaster } from "context/toaster/Toaster";
+import HtmlHead from "components/shared/htmlHead/HtmlHead";
 
 import { formatPrice } from "helpers/formatting";
 
@@ -28,7 +29,7 @@ const HOUR = 60 * 60 * 1000;
  * both these objects contain the right amount of quantity
  */
 
-function ProductSingleView({ product }) {
+function ProductSingleView({ product, metaDescription }) {
   const { setItems, setSubtotal } = useCart();
   const { Toaster, setToaster, hideToaster } = useToaster();
 
@@ -151,6 +152,7 @@ function ProductSingleView({ product }) {
 
   return (
     <div className="wrap">
+      <HtmlHead title={product.title} description={metaDescription} />
       <Toaster />
       <div className="flex">
         <div>

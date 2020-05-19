@@ -8,6 +8,7 @@ const routes = [
   {
     component: App,
     exact: false,
+    path: "/",
     childRoutes: [
       {
         component: Homepage,

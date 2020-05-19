@@ -32,12 +32,16 @@ function Overview({ items, type = "categorie" }) {
   return (
     <Row>
       {items.map(({ node: item }) => {
-        const { handle, products, title, priceRange, id } = item;
+        const { handle, products, title, priceRange, id, description } = item;
         const image = getImage(item, type);
-        console.log(!image);
         return (
           <Column key={id}>
-            <Link to={`/${type}/${handle}`}>
+            <Link
+              to={{
+                pathname: `/${type}/${handle}`,
+                state: { title, description },
+              }}
+            >
               <Image
                 logoThumnail={!image}
                 style={{
